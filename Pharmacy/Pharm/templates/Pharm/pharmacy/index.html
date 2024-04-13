@@ -1,0 +1,313 @@
+{% load static %}
+{% load extras %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>{{ pharmacy.name }}</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="{% static 'Pharm/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://kit-pro.fontawesome.com/releases/v5.12.1/css/pro.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'Pharm/css/style.css' %}">
+
+    <!-- Responsive stylesheet  -->
+    <link rel="stylesheet" type="text/css" href="{% static 'Pharm/css/responsive.css' %}">
+
+    <!-- Favicon -->
+    <link href="{{ pharmacy.logo.url }} " rel="shortcut icon" type="image/png">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+<style>
+    .slide-image {
+        position: relative; /* Make the container relative for absolute positioning */
+    }
+    
+    .slide-image::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9); /* Adjust the opacity as needed */
+        z-index: 100; /* Ensure the overlay is above the image */
+    }
+</style>
+</head>
+ 
+<body>
+
+    <div class="preloader"></div>
+
+    <!-- Header navbar start -->
+    <div class="main-navbar conner-style style-2 position-fixed">
+        <div class="container padding-none">
+            <div class="row">
+                <div class="col-md-12">
+                    <nav class="navbar navbar-default">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <a class="navbar-brand dis-none" href="index-2.html"><img src="{% static 'Pharm/img/logo-black.png' %}" alt="">
+                                </a>
+                            <a class="navbar-brand dis-block" href="index-2.html"><img src="{% static 'Pharm/img/logo-black.png' %}" alt="">
+                                </a>
+                        </div>
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" data-hover="dropdown" data-animations-delay="1.8s" data-animations="fadeInUp">
+                            <ul class="nav navbar-nav bg-none navbar-right style-3">
+                                <li class="dropdown active">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span data-hover="Home">Home <i class="fas fa-arrow-down" aria-hidden="true"></i></span> </a>
+                                    <li class="dropdown">
+                                        <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span data-hover="Depertment">{{ pharmacy.name }} </span></a>
+                                    </li>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header navbar end -->
+
+    <!-- Start  bootstrap-touch-slider Slider -->
+    <div id="bootstrap-touch-slider" class="carousel bs-slider fade  control-round indicators-line" data-ride="carousel" data-pause="hover" data-interval="5000" >
+
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#bootstrap-touch-slider" data-slide-to="0" class="active"></li>
+            <li data-target="#bootstrap-touch-slider" data-slide-to="1"></li>
+            <li data-target="#bootstrap-touch-slider" data-slide-to="2"></li>
+        </ol>
+
+        <!-- Wrapper For Slides -->
+        <div class="carousel-inner" role="listbox">
+            <!-- Third Slide -->
+            <div class="item active">
+                <!-- Slide Background -->
+                <img src="{{ pharmacy.image1.url }}" alt="Slider Images"  class="slide-image"/>
+                <div class="bs-slider-overlay"></div>
+
+                <div class="slide-text slide_style_left">
+                    <h1 data-animation="animated fadeInRight"> Welcome to <span class="color-defult"> {{ pharmacy.name }} </span></h1>
+                    <p data-animation="animated fadeInLeft">{{ pharmacy.description}}</p>
+                    <a  class="btn btn-primary" data-animation="animated fadeInRight" style="margin-top: 2rem; background-color: rgb(20, 167, 167); border: none;" type="submit">About {{pharmacy.name}}</a>
+                    <a  class="btn btn-primary" data-animation="animated fadeInRight" style="margin-top: 2rem; color: black; background-color: rgb(255, 255, 255); border: none;" type="submit">Contact {{pharmacy.name}}</a>
+                </div>
+            </div>
+ 
+        </div><!-- End of Wrapper For Slides -->
+
+     </div> <!-- End  bootstrap-touch-slider Slider -->
+     <div class="container">
+        <h1 style="padding: 1rem 0;">Available Drugs </h1>
+         <div class="row tab-pane active" id="grid">
+            {% for drug in drugs.all %}
+            <div class="col-xs-12 col-sm-6 col-md-4">
+                <div class="service-item text-center style-3" style="background: #00B092">
+                    <div style="margin: 0; padding: 0;">
+                        <img class="fas fa-heart" src="{{ drug.photo.url }}" style="border-radius: 0px; width: 100%;">
+                    </div>
+                    <h4><a href="#">{{drug.name}}</a></h4>
+                    <div class="border-center"></div>
+                    <p>  {{drug.maufacturer}}</p>
+                    <p>  {{drug.category}}</p>
+                    <h4>  {{drug.price}}</h4>
+                    <div>
+                        <p>{{drug.description}}</p>
+                    </div>
+
+                    
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+     </div>
+
+    {% comment %} <div class="col-md-4 col-sm-4 container">
+        <div class="product-item">
+            <div class="product-image">
+                <a class="product-img" href="#">
+                    <img class="primary-img" src="img/shop/s4.jpg" alt="" />
+                </a>
+            </div>
+            <span class="on-sale">
+                <span class="sale-text">Sale</span>
+            </span>
+            <div class="product-action">
+                <h4><a href="#">Your Title Here</a></h4>
+                <ul class="rating-text">
+                    <li><i class="fa fa-star"></i></li>
+                    <li><i class="fa fa-star"></i></li>
+                    <li><i class="fa fa-star"></i></li>
+                    <li><i class="fa fa-star"></i></li>
+                    <li><i class="fa fa-star"></i></li>
+                </ul>
+                <span class="price">$ 120</span>
+            </div>
+            <div class="pro-action">
+                <ul>
+                    <li>
+                        <a href="#">
+                        <i class="fa fa-retweet" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                        <i class="fa fa-heart" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="" href="#">
+                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div> {% endcomment %}
+    </div>
+
+    <!-- divider start -->
+    <section class="about-3col animatedParent animateOnce" id="services">
+        <div class="container">
+            <div class="section-content">
+                <div class="row">
+                    <h1 style="padding: 1rem 0;">Our Services </h1>
+                    <div class="about-feature style-2">
+                        {% for p in pharmacy.services|split %}
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                            <div class="appointment-item">
+                                <i class="fas fa-first-aid"> </i>
+                                <div class="line-border-center bg-gray margin-bottom-20"></div>
+                                <p>{{p}}</p>
+                                <button class="btn btn-theme btn-sm">Contact Us<i class="fas fa-phone"></i></button>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- divider end -->
+
+
+    <!-- service start -->
+    <section class="service-area bg-f8 animatedParent animateOnce">
+        <div class="container">
+            <div class="section-title">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 text-center">
+                        <h2>Meet the Found and Members</h2>
+                        <h3 class="color-defult">Here are our members</h3>
+                        <p class="lead"><span class="ff-p"></span></p>
+                    </div>
+                </div>
+            </div>
+            <div class="section-content">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-4">
+                        <div class="service-item text-center style-3">
+                            <img class="fas fa-heart" src="{{ pharmacy.logo.url }}">
+                            <h4><a href="#">{{pharmacy.founder}}</a></h4>
+                            <div class="border-center"></div>
+                            <p>  {{pharmacy.phoneNumber}}</p>
+                            <p>  {{pharmacy.email}}</p>
+                            <button type="submit" class="btn btn-theme margin-top-20" data-text="Send Message">View More</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- divider start -->
+    <section class="service-area over-layer-default" style="background-image:url(img/bg/5.jpg);">
+        <div class="container padding-bottom-none padding-top-40">
+            <div class="section-content">
+                <div class="row">
+                    <div class="col-sm-12 col-md-4">
+                        <div class="service-item style-1 text-white border-right">
+                            <div class="service-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="content">
+                                <h5><a href="#">Give us a Call</a></h5>
+                                <p>{{pharmacy.phoneNumber}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4">
+                        <div class="service-item style-1 text-white border-right">
+                            <div class="">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="content">
+                                <h5><a href="#">Send us a Message</a></h5>
+                                <p>{{pharmacy.email}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4">
+                        <div class="service-item style-1 text-white">
+                            <div class="">
+                                <i class="fas fa-map-marker"></i>
+                            </div>
+                            <div class="content">
+                                <h5><a href="#">Visit our Location</a></h5>
+                                <p>{{ pharmacy.location }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- service end -->
+     <a href="#" class="scrollup"><i class="pe-7s-up-arrow" aria-hidden="true"></i></a>
+    <!-- jQuery -->
+    <script type="text/javascript" src="{% static 'Pharm/js/jquery.min.js' %}"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script type="text/javascript" src="{% static 'Pharm/js/bootstrap.min.js' %}"></script>
+
+    <!-- all plugins and JavaScript -->
+    <script type="text/javascript" src="{% static 'Pharm/js/bootstrap-datepicker.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'Pharm/js/css3-animate-it.js' %}"></script>
+    <script type="text/javascript" src="{% static 'Pharm/js/bootstrap-dropdownhover.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'Pharm/js/owl.carousel.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'Pharm/js/gallery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'Pharm/js/player.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'Pharm/js/retina.js' %}"></script>
+    <script type="text/javascript" src="{% static 'Pharm/js/comming-soon.js' %}"></script>
+
+    <!-- Main Custom JS -->
+    <script type="text/javascript" src="{% static 'Pharm/js/script.js' %}"></script>
+
+
+</body>
+
+
+
+</html>
+

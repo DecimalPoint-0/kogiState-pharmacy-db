@@ -1,0 +1,58 @@
+{% extends 'Pharm/admin/base.html'%}
+{% block body %}
+{% load static %}
+
+<div class="bg-gray-100 flex-1 p-6 md:mt-16"> 
+
+    
+<!-- Start Recent Sales -->
+<a href="{% url 'addDrug' %}" class="btn-indigo inline" onclick="e.preventDefault()">Add Drugs</a>
+<div class="card col-span-2 xl:col-span-1 mt-3">
+  {% for message in messages %}
+    <div class="alert alert-success mb-5 bg-teal-600 text-white">
+      {{message}}
+    </div>
+  {% endfor %}
+  <div class="card-header">All Drugs</div>
+  <table class="table-auto w-full text-left">
+      <thead>
+          <tr>
+              <th class="px-4 py-2 border-r">Img</th>
+              <th class="px-4 py-2 border-r">Drug Name</th>
+              <th class="px-4 py-2 border-r">Category</th>
+              <th class="px-4 py-2 border-r">Manufacturer</th>
+              <th class="px-4 py-2 border-r">Price</th>
+              <th class="px-4 py-2 border-r">Action</th>
+          </tr>
+      </thead>
+      <tbody class="text-gray-600">
+          {% for product in products %}
+          <tr>      
+            <td class="border border-l-0 px-4 py-2">             
+            <div class="w-8 h-8 overflow-hidden rounded-full">
+              <img class="w-full h-full object-cover" src="{{ product.photo.url }}" >
+            </div>
+            </td>
+              <td class="border border-l-0 px-4 py-2">{{product.name}}</td>
+              <td class="border border-l-0 px-4 py-2">{{product.category}}</td>
+              <td class="border border-l-0 px-4 py-2">{{product.maufacturer}}</td>
+              <td class="border border-l-0 px-4 py-2">{{product.price}}</td>
+              <td class="border border-l-0 px-4 py-2">
+                <a href="{% url 'drugDetail' product.pk %}"><i class="fad fa-eye mr-2 text-green-600"></i></a>
+                <a href="{% url 'deleteDrug' product.pk %}"><i class="fad fa-trash mr-2 text-red-600"></i></a>
+                <a href="{% url 'updateDrug' product.pk %}"><i class="fad fa-edit "></i></a>
+              </td>
+          </tr>
+          {% endfor %}
+          
+      </tbody>
+  </table>
+</div>
+<!-- End Recent Sales -->
+</div>
+<script type="text/javascript">
+  setTimeout(() => {
+    document.querySelector('.alert').style.display = 'none';
+  },5000)
+</script>
+{% endblock %}

@@ -1,0 +1,270 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Kogi State Pharmacy Database</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="{% static 'Pharm/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://kit-pro.fontawesome.com/releases/v5.12.1/css/pro.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'Pharm/css/style.css' %}">
+
+    <!-- Responsive stylesheet  -->
+    <link rel="stylesheet" type="text/css" href="{% static 'Pharm/css/responsive.css' %}">
+
+    <!-- Favicon -->
+    <link href="{% static 'Pharm/img/favicon.png'%} " rel="shortcut icon" type="image/png">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+ 
+<body>
+
+    <div class="preloader"></div>
+
+    <!-- Header navbar start -->
+    <div class="main-navbar conner-style style-2 position-fixed">
+        <div class="container padding-none">
+            <div class="row">
+                <div class="col-md-12">
+                    <nav class="navbar navbar-default">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <a class="navbar-brand dis-none" href="index-2.html"><img src="{% static 'Pharm/img/logo-black.png' %}" alt="">
+                                </a>
+                            <a class="navbar-brand dis-block" href="index-2.html"><img src="{% static 'Pharm/img/logo-black.png' %}" alt="">
+                                </a>
+                        </div>
+                        
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" data-hover="dropdown" data-animations-delay="1.8s" data-animations="fadeInUp">
+                            
+                            <ul class="nav navbar-nav bg-none navbar-right style-3">
+                                <li class="dropdown active">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span data-hover="Home">Home <i class="fas fa-arrow-down" aria-hidden="true"></i></span> </a>
+                                </li>
+                                <li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+        <span data-hover="Department">Hospitals <i class="fas fa-angle-down" aria-hidden="true"></i></span>
+    </a>
+    <ul class="dropdown-menu">
+        {% for p in pharmacy %}
+            <li>
+                <a href="{% url 'pharmPageId' p.id %}" class="hospital-link">
+                    {{ p.name }}
+                    <div class="hospital-tooltip">
+                        <!-- Additional hospital information goes here -->
+                        <!-- <p>{{ p.description }}</p> -->
+                        <p style="color: brown">Location: {{ p.location }}</p>
+                        <!-- Add more details as needed -->
+                        <ul style="color: blue"> Drugs Avaible:
+                            {% for drug in p.drugs.all %}
+                            <li style="display: inline; color: black; list-style: disc;"> {{drug.name}}, </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</li>
+
+                                                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span data-hover="Contact">Contact <i class="fas fa-phone" aria-hidden="true"></i></span></a>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header navbar end -->
+
+    <!-- Start  bootstrap-touch-slider Slider -->
+    <div id="bootstrap-touch-slider" class="carousel bs-slider fade  control-round indicators-line" data-ride="carousel" data-pause="hover" data-interval="5000" >
+
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#bootstrap-touch-slider" data-slide-to="0" class="active"></li>
+            <li data-target="#bootstrap-touch-slider" data-slide-to="1"></li>
+            <li data-target="#bootstrap-touch-slider" data-slide-to="2"></li>
+        </ol>
+
+        <!-- Wrapper For Slides -->
+        <div class="carousel-inner" role="listbox">
+            <!-- Third Slide -->
+            <div class="item active">
+                <!-- Slide Background -->
+                <img src="{% static 'Pharm/img/bg/11.jpg' %}" alt="Slider Images"  class="slide-image"/>
+                <div class="bs-slider-overlay"></div>
+
+                <div class="slide-text slide_style_left">
+                    <h1 data-animation="animated fadeInRight">Kogi State <span class="color-defult"> Pharmacies Website</span></h1>
+                    <p data-animation="animated fadeInLeft">Looking for a Good Pharmacy in Kogi State? You are in the right Place. Search through the list of pharmacies in Kogi State</p>
+                    <div >
+                        <label for=""> Select A Pharmacy</label>
+                        <form method="POST" action="{% url 'pharmPage' %}" style="padding: 4rem 2rem; background: white; margin: auto;">
+                            {% csrf_token %}
+                            <select name="pharmacy" id="" style="padding: 1.3rem; width: 100%; font-size: 1.5rem;">
+                                <option value=""> -- select -- </option>
+                                {% for p in pharmacy %}
+                                <option value="{{p.pk}}"> {{p.name}} - {{p.location}} </option>
+                                {% endfor %}
+                            </select>
+                            <button  class="btn btn-primary" data-animation="animated fadeInRight" style="margin-top: 2rem; background-color: rgb(20, 167, 167); border: none;" type="submit">View Pharmacy</button>
+                        </form>
+                        </div>
+                </div>
+            </div>
+ 
+        </div><!-- End of Wrapper For Slides -->
+
+     </div> <!-- End  bootstrap-touch-slider Slider -->
+
+    <!-- divider start -->
+    <section class="about-3col animatedParent animateOnce">
+        <div class="container">
+            <div class="section-content">
+                <div class="row">
+                    <div class="about-feature style-2">
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                            <div class="appointment-item">
+                                <i class="fas fa-car"></i>
+                                <h5><a href="#">Our Mission</a></h5>
+                                <div class="line-border-center bg-gray margin-bottom-20"></div>
+                                <p>To provide relevant information about pharmacies in Kogi State.</p>
+                                <button class="btn btn-theme btn-sm">Find a Pharmacy <i class="fas fa-users"></i></button>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                            <div class="appointment-item">
+                                <i class="fas fa-eye"></i>
+                                <h5><a href="#">Our Vision</a></h5>
+                                <div class="line-border-center bg-gray margin-bottom-20"></div>
+                                <p>To collate information relating to all pharmacy in a single database to foster easy retrieval</p>
+                                <button class="btn btn-theme btn-sm">Get Directions <i class="pe-7s-angle-right"></i></button>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 center-block">
+                            <div class="appointment-item">
+                                <i class="fas fa-first-aid"></i>
+                                <h5><a href="#">Developers</a></h5>
+                                <div class="line-border-center bg-gray margin-bottom-20"></div>
+                                <p>CogeGraphics Programming Inst.</p>
+                                <button class="btn btn-theme btn-sm">Get intourch with us <i class="pe-7s-angle-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- divider end -->
+    <!-- welcome end -->
+
+    <!-- Team start -->
+    <section class="team-area">
+        <div class="container">
+            <div class="section-title">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 text-center">
+                        <h2><span class="color-defult">OUR</span> PHARMACY</h2>
+                        <div class="line-border-center bg-defult"></div>
+                        <p>This is the list of out exclusive pharmacies in Lokoja Kogi State</p>
+                    </div>
+                </div>
+            </div>
+            <div class="section-content">
+                <div class="row">
+                    <div class="team-carousel">
+                        {% for p in pharmacy %}
+                        <div class="item">
+                            <div class="team-item-2">
+                                <img src="{{p.image1.url}}" alt="">
+                                <div class="team-contact">
+                                    <ul>
+                                        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                        <li><a href="#"><i class="fab fa-facebook"></i></a></li>
+                                        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                        <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                                    </ul>
+                                </div>
+                                <div class="team-content">
+                                    <h4><a href="#">{{p.name}}</a></h4>
+                                    <h6>{{p.location}}</h6>
+                                    <div class="team-content-icon">
+                                        <i class="fas fa-heart"></i>
+                                    </div>
+                                </div>
+                                <div class="timetable">
+                                    <div class="item">
+                                        <div class="label">Opening Hours</div>
+                                        <div class="value">24/7 daily</div>
+                                    </div>
+                                    <div class="item">
+                                        <div class="label">Founder</div>
+                                        <div class="value"> {{p.founder}}</div>
+                                    </div>
+                                    
+                                    <a href="{% url 'pharmPageId' p.id %}" class="btn-theme text-center btn-block"> View Profile</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Team end -->
+
+    <!-- service start -->
+    
+     <a href="#" class="scrollup"><i class="pe-7s-up-arrow" aria-hidden="true"></i></a>
+    <!-- jQuery -->
+    <script type="text/javascript" src="{% static 'Pharm/js/jquery.min.js' %}"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script type="text/javascript" src="{% static 'Pharm/js/bootstrap.min.js' %}"></script>
+
+    <!-- all plugins and JavaScript -->
+    <script type="text/javascript" src="{% static 'Pharm/js/bootstrap-datepicker.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'Pharm/js/css3-animate-it.js' %}"></script>
+    <script type="text/javascript" src="{% static 'Pharm/js/bootstrap-dropdownhover.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'Pharm/js/owl.carousel.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'Pharm/js/gallery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'Pharm/js/player.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'Pharm/js/retina.js' %}"></script>
+    <script type="text/javascript" src="{% static 'Pharm/js/comming-soon.js' %}"></script>
+
+    <!-- Main Custom JS -->
+    <script type="text/javascript" src="{% static 'Pharm/js/script.js' %}"></script>
+
+
+</body>
+
+
+
+</html>
+

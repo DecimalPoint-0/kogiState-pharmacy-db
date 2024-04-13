@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@import url('https://fonts.googleapis.com/css?family=Ubuntu&display=swap');
+@import  "./external/prism";
+@import "apply";
+@import "index/report-card";
+@tailwind utilities;
+
+
+
+

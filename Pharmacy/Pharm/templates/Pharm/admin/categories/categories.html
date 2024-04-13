@@ -1,0 +1,50 @@
+{% extends 'Restuarant/admin/base.html'%}
+{% block body %}
+{% load static %}
+
+<div class="bg-gray-100 flex-1 p-6 md:mt-16"> 
+
+    
+<!-- Start Recent Sales -->
+<a href="{% url 'addCategory' %}" class="btn-indigo inline" onclick="e.preventDefault()">Add Category</a>
+<div class="card col-span-2 xl:col-span-1 mt-3">
+  {% for message in messages %}
+    <div class="alert alert-success mb-5">
+      {{message}}
+    </div>
+  {% endfor %}
+  <div class="card-header">Categories</div>
+  <table class="table-auto w-full text-left">
+      <thead>
+          <tr>
+              <th class="px-4 py-2 border-r">Id</th>
+              <th class="px-4 py-2 border-r">Name</th>
+              <th class="px-4 py-2 border-r">Description</th>
+              <th class="px-4 py-2 border-r">Action</th>
+          </tr>
+      </thead>
+      <tbody class="text-gray-600">
+          {% for category in categories %}
+          <tr>      
+            <td class="border border-l-0 px-4 py-2">{{category.id}}</td>
+              <td class="border border-l-0 px-4 py-2">{{category.name}}</td>
+              <td class="border border-l-0 px-4 py-2">{{category.description}}</td>
+              <td class="border border-l-0 px-4 py-2">
+                <a href=""><i class="fad fa-eye mr-2 text-green-600"></i></a>
+                <a href="{% url 'deleteCategory' category.pk %}"><i class="fad fa-trash mr-2 text-red-600"></i></a>
+                <a href="{% url 'updateCategory' category.pk %}"><i class="fad fa-edit "></i></a>
+              </td>
+          </tr>
+          {% endfor %}
+          
+      </tbody>
+  </table>
+</div>
+<!-- End Recent Sales -->
+</div>
+<script type="text/javascript">
+  setTimeout(() => {
+    document.querySelector('.alert').style.display = 'none';
+  },2000)
+</script>
+{% endblock %}

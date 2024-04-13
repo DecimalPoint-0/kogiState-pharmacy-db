@@ -1,0 +1,15 @@
+{% extends 'Restuarant/admin/base.html'%}
+{% block body %}
+{% load static %}
+<div class="mx-auto mt-10">
+  <form action="" method="post" enctype="multipart/form-data" class="bg-white shadow-xl p-6 ">
+      {% csrf_token %}
+      <h4>Are you sure you want to delete <span class="font-bold">{{object}}</span> ?</h4>
+      {{ form }}
+      <div class="flex justify-center space-x-12 mt-6">
+        <input type="submit" value="Yes" class="btn-indigo ml-2 bg-green-600 inline">
+        <a href="{% url 'foodtype' %}" class="btn-indigo ml-2 bg-red-600 inline" >No</a>
+      </div>
+  </form>
+</div>
+{% endblock %}
